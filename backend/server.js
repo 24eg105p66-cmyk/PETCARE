@@ -144,12 +144,22 @@ async function startServer() {
   // Ensure default demo assets and upload folders exist
   await initAssets().catch(err => console.warn('Asset init warning:', err.message));
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`=======================================================`);
     console.log(`🚀 PetCare Passport Server running at: http://localhost:${PORT}`);
     console.log(`   Health Check: http://localhost:${PORT}/api/health`);
     console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`=======================================================`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`\n❌ Error: Port ${PORT} is already in use by another process.`);
+      console.error(`👉 You can stop the process occupying port ${PORT}, or change PORT in backend/.env.\n`);
+      process.exit(1);
+    } else {
+      console.error('Server error:', err);
+    }
   });
 }
 

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "PetCare Passport - Secure Digital Pet Health Records and QR-Based Emergency Identification System",
   "scripts": {
-    "install:all": "cd backend && npm install",
-    "start": "cd backend && npm start",
-    "dev": "cd backend && npm run dev"
+    "install:all": "npm install --prefix backend",
+    "start": "npm start --prefix backend",
+    "dev": "npm run dev --prefix backend"
   },
   "keywords": ["petcare", "health-records", "qr-code"],
   "author": "PetCare Passport Team",
