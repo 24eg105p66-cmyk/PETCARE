@@ -1,0 +1,11 @@
+node_modules/
+backend/node_modules/
+.env
+backend/.env
+.DS_Store
+Thumbs.db
+backend/uploads/pets/upload-*
+backend/uploads/reports/upload-*
+backend/uploads/documents/upload-*
+*.log
+npm-debug.log*

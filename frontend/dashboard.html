@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — PetCare Passport</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <span>PetCare <span class="text-success">Passport</span></span>
+      </div>
+
+      <div class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link active">
+          <i class="bi bi-grid-1x2-fill"></i> Dashboard
+        </a>
+        <a href="pets.html" class="sidebar-link">
+          <i class="bi bi-heart-pulse-fill"></i> My Pets
+        </a>
+        <a href="health-records.html" class="sidebar-link">
+          <i class="bi bi-journal-medical"></i> Health Records
+        </a>
+        <a href="add-pet.html" class="sidebar-link">
+          <i class="bi bi-plus-circle-fill"></i> Add New Pet
+        </a>
+        <a href="reminders.html" class="sidebar-link">
+          <i class="bi bi-alarm-fill"></i> Reminders
+        </a>
+        <a href="qr-code.html" class="sidebar-link">
+          <i class="bi bi-qr-code"></i> QR Emergency Tags
+        </a>
+        <a href="found-reports.html" class="sidebar-link">
+          <i class="bi bi-geo-alt-fill"></i> Found-Pet Reports
+        </a>
+        <a href="profile.html" class="sidebar-link">
+          <i class="bi bi-person-circle"></i> Owner Profile
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 overflow-hidden">
+            <div class="rounded-circle bg-success-subtle text-success p-2 fw-bold" style="width: 38px; height: 38px; display:flex; align-items:center; justify-content:center;">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="overflow-hidden">
+              <div class="current-user-name fw-bold small text-truncate text-dark">Owner</div>
+              <div class="current-user-email text-muted text-xs text-truncate" style="font-size: 0.75rem;">owner@example.com</div>
+            </div>
+          </div>
+          <button class="btn btn-outline-danger btn-sm btn-logout" title="Log Out">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-light d-lg-none p-2 border" id="sidebarToggleBtn" aria-label="Toggle menu">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <div>
+            <h5 class="mb-0 fw-bold">Overview Dashboard</h5>
+            <small class="text-muted">Welcome back, <span class="current-user-name fw-semibold text-success">...</span></small>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <!-- Notification Bell Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-light border position-relative rounded-circle p-2" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+              <i class="bi bi-bell fs-5"></i>
+              <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size: 0.65rem;">
+                0
+              </span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end shadow-lg p-0" style="width: 320px; max-height: 400px; overflow-y: auto;">
+              <div class="d-flex align-items-center justify-content-between p-3 border-bottom bg-light">
+                <span class="fw-bold small text-dark">Notifications</span>
+                <button class="btn btn-link btn-sm p-0 text-success text-decoration-none small" id="markAllReadBtn">Mark all as read</button>
+              </div>
+              <div id="notifList">
+                <div class="p-3 text-center text-muted small">Loading notifications...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Add Pet -->
+          <a href="add-pet.html" class="btn btn-primary-custom btn-sm d-none d-md-inline-flex">
+            <i class="bi bi-plus-lg"></i> Add Pet
+          </a>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="app-content">
+        <!-- Quick Action Banner -->
+        <div class="custom-card p-4 mb-4 bg-white">
+          <div class="row align-items-center g-3">
+            <div class="col-md-7">
+              <h4 class="fw-bold mb-1">🐾 Welcome, <span class="current-user-name text-success">Owner</span>!</h4>
+              <p class="text-muted mb-0 small">
+                Your pets' health records and collar QR codes are synchronized in real time. Use the quick actions below to manage your pets.
+              </p>
+            </div>
+            <div class="col-md-5 text-md-end d-flex flex-wrap gap-2 justify-content-md-end">
+              <a href="add-pet.html" class="btn btn-primary-custom btn-sm">
+                <i class="bi bi-plus-circle"></i> Register Pet
+              </a>
+              <a href="reminders.html" class="btn btn-outline-custom btn-sm">
+                <i class="bi bi-alarm"></i> Reminders
+              </a>
+              <a href="qr-code.html" class="btn btn-mint btn-sm">
+                <i class="bi bi-qr-code"></i> View QR Tags
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overdue Warning Banner if any -->
+        <div id="overdueAlertBanner" class="alert alert-danger d-flex align-items-center justify-content-between p-3 rounded-4 mb-4 d-none shadow-sm" role="alert">
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-exclamation-triangle-fill fs-3 text-danger"></i>
+            <div>
+              <div class="fw-bold">Action Required: Overdue Vaccinations Detected</div>
+              <div class="small" id="overdueAlertText">One or more pets are past their scheduled booster dates.</div>
+            </div>
+          </div>
+          <a href="reminders.html" class="btn btn-danger btn-sm">View Reminders</a>
+        </div>
+
+        <!-- Found Pet Alert Banner if pending reports exist -->
+        <div id="foundAlertBanner" class="alert alert-warning d-flex align-items-center justify-content-between p-3 rounded-4 mb-4 d-none shadow-sm" role="alert">
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-shield-exclamation fs-3 text-warning-emphasis"></i>
+            <div>
+              <div class="fw-bold text-dark">🚨 Urgent: Found Pet Incident Report Received!</div>
+              <div class="small text-muted" id="foundAlertText">A finder scanned a QR code and reported finding your pet.</div>
+            </div>
+          </div>
+          <a href="found-reports.html" class="btn btn-dark btn-sm">View Report Now</a>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <i class="bi bi-heart-pulse"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="statTotalPets">0</div>
+                <div class="stat-label">Registered Pets</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon coral">
+                <i class="bi bi-exclamation-octagon"></i>
+              </div>
+              <div>
+                <div class="stat-value text-danger" id="statOverdueVaccines">0</div>
+                <div class="stat-label">Overdue Vaccines</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon amber">
+                <i class="bi bi-calendar-check"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="statUpcomingVaccines">0</div>
+                <div class="stat-label">Upcoming Vaccines (30d)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="statDewormings">0</div>
+                <div class="stat-label">Due Dewormings</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registered Pets Section -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <div>
+            <h5 class="fw-bold mb-0">My Registered Pets</h5>
+            <small class="text-muted">Select a pet to view health timeline, documents, or QR tag</small>
+          </div>
+          <a href="pets.html" class="btn btn-outline-custom btn-sm">View All Pets</a>
+        </div>
+
+        <!-- Pets Grid Container -->
+        <div class="row g-4 mb-4" id="petsGrid">
+          <div class="col-12 text-center py-5">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">Loading pets...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Grid: Recent Records & Urgent Reminders -->
+        <div class="row g-4">
+          <!-- Recent Medical Records -->
+          <div class="col-lg-7">
+            <div class="custom-card p-4 h-100">
+              <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                <h6 class="fw-bold mb-0"><i class="bi bi-clock-history text-success me-2"></i>Recently Updated Records</h6>
+                <a href="pets.html" class="small text-success text-decoration-none">View Details</a>
+              </div>
+              <div id="recentRecordsList">
+                <div class="text-center text-muted small py-4">Loading recent medical records...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Urgent Due Reminders -->
+          <div class="col-lg-5">
+            <div class="custom-card p-4 h-100">
+              <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                <h6 class="fw-bold mb-0"><i class="bi bi-bell text-warning me-2"></i>Upcoming Due Dates</h6>
+                <a href="reminders.html" class="small text-success text-decoration-none">All Reminders</a>
+              </div>
+              <div id="urgentRemindersList">
+                <div class="text-center text-muted small py-4">Checking due schedules...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- API Client & Navbar Component -->
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar.js"></script>
+  <!-- Dashboard Specific Script -->
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

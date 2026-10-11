@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Records Master History — PetCare Passport</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon"><i class="bi bi-shield-check"></i></div>
+        <span>PetCare <span class="text-success">Passport</span></span>
+      </div>
+      <div class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a href="pets.html" class="sidebar-link"><i class="bi bi-heart-pulse-fill"></i> My Pets</a>
+        <a href="health-records.html" class="sidebar-link active"><i class="bi bi-journal-medical"></i> Health Records</a>
+        <a href="add-pet.html" class="sidebar-link"><i class="bi bi-plus-circle-fill"></i> Add New Pet</a>
+        <a href="reminders.html" class="sidebar-link"><i class="bi bi-alarm-fill"></i> Reminders</a>
+        <a href="qr-code.html" class="sidebar-link"><i class="bi bi-qr-code"></i> QR Emergency Tags</a>
+        <a href="found-reports.html" class="sidebar-link"><i class="bi bi-geo-alt-fill"></i> Found-Pet Reports</a>
+        <a href="profile.html" class="sidebar-link"><i class="bi bi-person-circle"></i> Owner Profile</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 overflow-hidden">
+            <div class="rounded-circle bg-success-subtle text-success p-2 fw-bold" style="width: 38px; height: 38px; display:flex; align-items:center; justify-content:center;">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="overflow-hidden">
+              <div class="current-user-name fw-bold small text-truncate text-dark">Owner</div>
+              <div class="current-user-email text-muted text-xs text-truncate" style="font-size: 0.75rem;">owner@example.com</div>
+            </div>
+          </div>
+          <button class="btn btn-outline-danger btn-sm btn-logout" title="Log Out"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-light d-lg-none p-2 border" id="sidebarToggleBtn"><i class="bi bi-list fs-5"></i></button>
+          <div>
+            <h5 class="mb-0 fw-bold">Health Records History</h5>
+            <small class="text-muted">Master healthcare history, veterinary visits, and certificates</small>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <a href="add-health-record.html" class="btn btn-primary-custom btn-sm">
+            <i class="bi bi-plus-lg"></i> Add New Record
+          </a>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Filter & Search Controls -->
+        <div class="custom-card p-3 mb-4 bg-white">
+          <div class="row g-3 align-items-center">
+            <div class="col-md-3">
+              <label for="filterPetSelect" class="form-label small fw-bold mb-1">Filter by Pet</label>
+              <select id="filterPetSelect" class="form-select form-select-sm">
+                <option value="">All Pets</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="filterCategorySelect" class="form-label small fw-bold mb-1">Record Category</label>
+              <select id="filterCategorySelect" class="form-select form-select-sm">
+                <option value="all">All Categories</option>
+                <option value="vaccination">Vaccinations</option>
+                <option value="deworming">Deworming</option>
+                <option value="medication">Medications</option>
+                <option value="vet_visit">Vet Visits</option>
+                <option value="allergy_condition">Conditions & Allergies</option>
+                <option value="document">Documents</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="searchInput" class="form-label small fw-bold mb-1">Search Records</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="searchInput" placeholder="Search title, clinic, notes...">
+              </div>
+            </div>
+            <div class="col-md-2 text-md-end pt-md-3">
+              <span class="small text-muted" id="recordCountLabel">0 records</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Table / Cards -->
+        <div class="custom-card p-4 bg-white mb-4">
+          <div id="recordsTableContainer">
+            <div class="text-center py-5">
+              <div class="spinner-border text-success" role="status"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-danger fw-bold"><i class="bi bi-trash3-fill me-2"></i>Delete Record</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body py-3">
+          <p class="text-muted mb-0">Are you sure you want to delete this health record?</p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteRecordBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/health-records.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="100%" height="100%" fill="#E9F5ED"/>
+    <circle cx="200" cy="180" r="110" fill="#E6AF2E"/>
+    <!-- Dog Face -->
+    <ellipse cx="200" cy="190" rx="90" ry="75" fill="#F4C95D"/>
+    <!-- Ears -->
+    <path d="M 120,130 C 90,160 85,240 125,230 C 145,225 145,170 140,140 Z" fill="#D4991E"/>
+    <path d="M 280,130 C 310,160 315,240 275,230 C 255,225 255,170 260,140 Z" fill="#D4991E"/>
+    <!-- Eyes -->
+    <ellipse cx="165" cy="175" rx="10" ry="12" fill="#2D3142"/>
+    <circle cx="168" cy="172" r="3" fill="#FFFFFF"/>
+    <ellipse cx="235" cy="175" rx="10" ry="12" fill="#2D3142"/>
+    <circle cx="238" cy="172" r="3" fill="#FFFFFF"/>
+    <!-- Snout & Nose -->
+    <ellipse cx="200" cy="210" rx="35" ry="25" fill="#FAF0CA"/>
+    <path d="M 190,200 Q 200,195 210,200 Q 200,215 190,200 Z" fill="#2D3142"/>
+    <path d="M 200,212 L 200,222 M 193,222 Q 200,227 207,222" stroke="#2D3142" stroke-width="3" fill="none"/>
+    <!-- Collar & Tag -->
+    <rect x="130" y="270" width="140" height="20" rx="10" fill="#2D6A4F"/>
+    <circle cx="200" cy="295" r="14" fill="#E76F51"/>
+    <text x="200" y="300" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">QR</text>
+    <text x="200" y="355" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1E5136" text-anchor="middle">Max (Golden Retriever)</text>
+  </svg>

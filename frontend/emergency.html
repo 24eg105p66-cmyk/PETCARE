@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Pet Profile — PetCare Passport</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background-color: #F4F7F5;
+    }
+    .emergency-header {
+      background: linear-gradient(135deg, #1E5136 0%, #0F3120 100%);
+      color: #FFFFFF;
+      padding: 1.5rem 1rem;
+      border-bottom: 4px solid #E76F51;
+    }
+    .emergency-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Emergency Alert Header -->
+  <header class="emergency-header text-center">
+    <div class="container">
+      <div class="d-inline-flex align-items-center gap-2 mb-1">
+        <i class="bi bi-shield-fill-check fs-4 text-warning"></i>
+        <h5 class="fw-bold mb-0 text-white letter-spacing-1">PETCARE PASSPORT</h5>
+      </div>
+      <div class="small text-light opacity-75">Verified Digital Pet Emergency Profile</div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 680px;">
+    <!-- Loading State -->
+    <div id="loadingProfile" class="text-center py-5">
+      <div class="spinner-border text-success" role="status"></div>
+      <p class="text-muted small mt-2">Loading emergency profile...</p>
+    </div>
+
+    <!-- Error / Invalid Token State -->
+    <div id="errorProfile" class="custom-card p-4 text-center d-none">
+      <div class="stat-icon coral mx-auto mb-3">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+      <h4 class="fw-bold text-danger">Profile Unavailable</h4>
+      <p class="text-muted small mb-4" id="errorMessageText">
+        This emergency QR tag identifier is invalid or has been deactivated by its owner.
+      </p>
+      <a href="/" class="btn btn-outline-custom btn-sm">Visit PetCare Passport Home</a>
+    </div>
+
+    <!-- Active Profile Content -->
+    <div id="activeProfile" class="d-none">
+      <!-- Urgent Caution Banner (Custom instructions) -->
+      <div id="urgentBanner" class="alert alert-danger rounded-4 p-3 mb-3 shadow-sm border border-danger-subtle d-none">
+        <div class="d-flex align-items-start gap-2">
+          <i class="bi bi-bell-fill fs-4 text-danger flex-shrink-0 mt-1"></i>
+          <div>
+            <div class="fw-bold text-danger">OWNER EMERGENCY CAUTION</div>
+            <div class="small text-dark" id="customInstructionsText">...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pet Emergency Card -->
+      <div class="emergency-card mb-4">
+        <div class="p-4 text-center border-bottom bg-white">
+          <div id="photoContainer" class="mb-3">
+            <img id="petPhoto" src="/uploads/pets/demo-max.svg" alt="Pet Avatar" class="rounded-circle border shadow" style="width: 140px; height: 140px; object-fit: cover;">
+          </div>
+          <h2 class="fw-bold mb-1 text-dark" id="petName">Pet Name</h2>
+          <div class="text-muted fw-semibold mb-2" id="petSpeciesBreed">Species • Breed</div>
+          
+          <div class="d-inline-flex flex-wrap gap-2 justify-content-center text-xs">
+            <span class="badge bg-light text-dark border" id="petMicrochipBadge">Microchip: Verified</span>
+            <span class="badge bg-success-subtle text-success border border-success-subtle">ID Tag Active</span>
+          </div>
+        </div>
+
+        <!-- Essential Medical & Safety Warnings -->
+        <div class="p-4">
+          <h6 class="fw-bold text-success text-uppercase small mb-3 letter-spacing-1">
+            <i class="bi bi-shield-plus me-1"></i> Critical Health Information
+          </h6>
+
+          <!-- Allergies Alert -->
+          <div class="p-3 bg-danger-subtle rounded-3 border border-danger-subtle mb-3 d-none" id="allergiesBox">
+            <div class="d-flex align-items-center gap-2 text-danger fw-bold small mb-1">
+              <i class="bi bi-exclamation-triangle-fill"></i> KNOWN ALLERGIES (DO NOT FEED)
+            </div>
+            <div class="small text-danger-emphasis fw-medium" id="allergiesText">...</div>
+          </div>
+
+          <!-- Medical Conditions & Meds -->
+          <div class="p-3 bg-warning-subtle rounded-3 border border-warning-subtle mb-3 d-none" id="medicalBox">
+            <div class="d-flex align-items-center gap-2 text-warning-emphasis fw-bold small mb-1">
+              <i class="bi bi-heart-pulse-fill"></i> EXISTING MEDICAL CONDITIONS / MEDICATIONS
+            </div>
+            <div class="small text-dark" id="medicalText">...</div>
+          </div>
+
+          <!-- Special Care Notes -->
+          <div class="p-3 bg-light rounded-3 border mb-3 d-none" id="specialCareBox">
+            <div class="fw-bold small text-dark mb-1">
+              <i class="bi bi-info-circle-fill text-success me-1"></i> Special Care & Handling Instructions
+            </div>
+            <div class="small text-muted" id="specialCareText">...</div>
+          </div>
+
+          <!-- Direct Phone Call Action (If approved by owner) -->
+          <div id="phoneActionBox" class="mb-3 d-none">
+            <div class="p-3 bg-success-subtle rounded-3 border border-success-subtle text-center">
+              <div class="small text-success fw-bold mb-2">Approved Owner Emergency Contact</div>
+              <a href="#" id="callOwnerBtn" class="btn btn-primary-custom w-100 py-2 fs-6">
+                <i class="bi bi-telephone-fill me-2"></i> Call Owner: <span id="ownerPhoneText">...</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Found Pet Report Section (If enabled by owner) -->
+      <div class="emergency-card p-4" id="foundReportSection">
+        <div class="d-flex align-items-center gap-2 mb-3 border-bottom pb-2">
+          <i class="bi bi-geo-alt-fill text-danger fs-4"></i>
+          <div>
+            <h5 class="fw-bold mb-0 text-dark">Found This Pet? Submit a Report</h5>
+            <small class="text-muted">Directly alert the owner with your contact & location</small>
+          </div>
+        </div>
+
+        <!-- Report Success Alert -->
+        <div id="reportSuccessAlert" class="alert alert-success d-none text-center p-4 rounded-4" role="alert">
+          <i class="bi bi-check-circle-fill fs-1 text-success d-block mb-2"></i>
+          <h5 class="fw-bold text-success">Report Submitted Successfully!</h5>
+          <p class="small text-muted mb-0" id="reportSuccessMsg">
+            The owner has been notified on their dashboard with your contact details and location. Thank you for helping reunite this pet!
+          </p>
+        </div>
+
+        <!-- Found Report Form -->
+        <form id="foundReportForm" novalidate enctype="multipart/form-data">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="finderName" class="form-label small fw-bold">Your Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="finderName" name="finder_name" placeholder="e.g. David Miller" required>
+            </div>
+            <div class="col-md-6">
+              <label for="finderPhone" class="form-label small fw-bold">Your Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" id="finderPhone" name="finder_phone" placeholder="e.g. +1 (555) 012-3456" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="finderEmail" class="form-label small fw-bold">Your Email Address (Optional)</label>
+            <input type="email" class="form-control" id="finderEmail" name="finder_email" placeholder="e.g. david@example.com">
+          </div>
+
+          <div class="mb-3">
+            <label for="foundLocation" class="form-label small fw-bold">Location Where Pet Was Found <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+              <input type="text" class="form-control" id="foundLocation" name="found_location" placeholder="e.g. Riverside Park near North Entrance bench" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="foundDate" class="form-label small fw-bold">Date & Time Found</label>
+            <input type="datetime-local" class="form-control" id="foundDate" name="found_date">
+          </div>
+
+          <div class="mb-3">
+            <label for="finderMessage" class="form-label small fw-bold">Message for Owner (Optional)</label>
+            <textarea class="form-control" id="finderMessage" name="message" rows="2" placeholder="e.g. Pet is safe with me on my porch. Has fresh water and shade."></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label for="reportPhoto" class="form-label small fw-bold">Optional Photo of the Pet</label>
+            <input type="file" class="form-control form-control-sm" id="reportPhoto" name="photo" accept="image/jpeg,image/png,image/webp">
+            <small class="text-muted" style="font-size: 0.72rem;">Helps owner confirm current condition (Max 5MB)</small>
+          </div>
+
+          <button type="submit" class="btn btn-coral w-100 py-2 fs-6 shadow-sm" id="submitReportBtn">
+            <span id="reportBtnText"><i class="bi bi-send-fill me-1"></i> Send Found Report to Owner</span>
+            <span id="reportBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Trust & Privacy Footnote -->
+      <div class="text-center mt-4 text-muted small">
+        <i class="bi bi-shield-lock me-1"></i> Powered by <strong>PetCare Passport</strong> • Protected Privacy Shield
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/emergency.js"></script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Health Passport — PetCare Passport</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon"><i class="bi bi-shield-check"></i></div>
+        <span>PetCare <span class="text-success">Passport</span></span>
+      </div>
+      <div class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a href="pets.html" class="sidebar-link active"><i class="bi bi-heart-pulse-fill"></i> My Pets</a>
+        <a href="health-records.html" class="sidebar-link"><i class="bi bi-journal-medical"></i> Health Records</a>
+        <a href="add-pet.html" class="sidebar-link"><i class="bi bi-plus-circle-fill"></i> Add New Pet</a>
+        <a href="reminders.html" class="sidebar-link"><i class="bi bi-alarm-fill"></i> Reminders</a>
+        <a href="qr-code.html" class="sidebar-link"><i class="bi bi-qr-code"></i> QR Emergency Tags</a>
+        <a href="found-reports.html" class="sidebar-link"><i class="bi bi-geo-alt-fill"></i> Found-Pet Reports</a>
+        <a href="profile.html" class="sidebar-link"><i class="bi bi-person-circle"></i> Owner Profile</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 overflow-hidden">
+            <div class="rounded-circle bg-success-subtle text-success p-2 fw-bold" style="width: 38px; height: 38px; display:flex; align-items:center; justify-content:center;">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="overflow-hidden">
+              <div class="current-user-name fw-bold small text-truncate text-dark">Owner</div>
+              <div class="current-user-email text-muted text-xs text-truncate" style="font-size: 0.75rem;">owner@example.com</div>
+            </div>
+          </div>
+          <button class="btn btn-outline-danger btn-sm btn-logout" title="Log Out"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-light d-lg-none p-2 border" id="sidebarToggleBtn"><i class="bi bi-list fs-5"></i></button>
+          <div>
+            <h5 class="mb-0 fw-bold" id="headerPetTitle">Pet Health Passport</h5>
+            <small class="text-muted">Comprehensive medical record & collar identification</small>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <a href="#" id="editPetTopBtn" class="btn btn-outline-custom btn-sm">
+            <i class="bi bi-pencil"></i> Edit Profile
+          </a>
+          <a href="#" id="addRecordTopBtn" class="btn btn-primary-custom btn-sm">
+            <i class="bi bi-plus-lg"></i> Add Health Record
+          </a>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Notice Disclaimer -->
+        <div class="alert alert-info py-2 px-3 small d-flex align-items-center gap-2 mb-4 rounded-3 border">
+          <i class="bi bi-info-circle-fill text-primary fs-5"></i>
+          <span><strong>Veterinary Notice:</strong> This digital passport is for record organization and emergency identification. It does not replace professional veterinary diagnostics, prescriptions, or clinical advice.</span>
+        </div>
+
+        <!-- Pet Profile Card Top -->
+        <div class="custom-card p-4 mb-4 bg-white">
+          <div class="row align-items-center g-4">
+            <div class="col-md-auto text-center">
+              <img id="petPhoto" src="/uploads/pets/demo-max.svg" alt="Pet Avatar" class="rounded-circle border shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+            </div>
+            <div class="col-md">
+              <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                <h3 class="fw-bold mb-0 text-dark" id="petName">Loading...</h3>
+                <span class="badge bg-success-subtle text-success fs-6" id="petSpecies">Species</span>
+                <span class="badge bg-light text-muted border" id="petGender">Sex</span>
+              </div>
+              <p class="text-muted mb-2" id="petBreed">Breed description</p>
+
+              <div class="d-flex flex-wrap gap-3 text-muted small">
+                <div><i class="bi bi-calendar-event me-1"></i> Age: <strong class="text-dark" id="petAge">—</strong></div>
+                <div><i class="bi bi-speedometer2 me-1"></i> Weight: <strong class="text-dark" id="petWeight">—</strong></div>
+                <div><i class="bi bi-upc-scan me-1"></i> Microchip: <strong class="text-dark" id="petMicrochip">—</strong></div>
+                <div><i class="bi bi-droplet-half me-1"></i> Blood: <strong class="text-dark" id="petBlood">—</strong></div>
+              </div>
+            </div>
+
+            <!-- QR Action Quick View -->
+            <div class="col-md-auto text-center border-start ps-md-4">
+              <div class="p-2 bg-light rounded-3 d-inline-block border">
+                <img id="petQrCodeThumb" src="/assets/images/default-qr.png" alt="QR Code" style="width: 80px; height: 80px;" class="mb-1">
+                <div class="small fw-bold text-success" style="font-size: 0.72rem;">Scan if found</div>
+              </div>
+              <div class="mt-2 d-flex flex-column gap-1">
+                <a href="#" id="viewQrBtn" class="btn btn-mint btn-sm py-1" style="font-size: 0.78rem;">
+                  <i class="bi bi-qr-code"></i> Printable Tag
+                </a>
+                <a href="#" id="privacySettingsBtn" class="btn btn-light btn-sm py-1 border" style="font-size: 0.78rem;">
+                  <i class="bi bi-shield-lock"></i> Privacy Settings
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Tabs & Information -->
+        <div class="row g-4">
+          <!-- Left Column: Medical Attributes & Special Instructions -->
+          <div class="col-lg-4">
+            <!-- Medical Summary Card -->
+            <div class="custom-card p-4 mb-4">
+              <h6 class="fw-bold text-success mb-3 border-bottom pb-2">
+                <i class="bi bi-clipboard2-pulse me-2"></i>Medical Overview
+              </h6>
+              
+              <div class="mb-3">
+                <label class="text-muted text-xs d-block mb-1" style="font-size: 0.75rem;">STERILIZATION STATUS</label>
+                <span class="badge bg-light text-dark border py-1 px-2" id="petSterilization">—</span>
+              </div>
+
+              <div class="mb-3">
+                <label class="text-muted text-xs d-block mb-1" style="font-size: 0.75rem;">KNOWN ALLERGIES</label>
+                <div class="p-2 bg-danger-subtle text-danger-emphasis rounded-3 small border border-danger-subtle" id="petAllergies">
+                  None recorded
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="text-muted text-xs d-block mb-1" style="font-size: 0.75rem;">EXISTING CONDITIONS</label>
+                <div class="p-2 bg-light rounded-3 small text-dark" id="petConditions">
+                  None recorded
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="text-muted text-xs d-block mb-1" style="font-size: 0.75rem;">CURRENT MEDICATIONS</label>
+                <div class="p-2 bg-light rounded-3 small text-dark" id="petMedications">
+                  None prescribed
+                </div>
+              </div>
+
+              <div class="mb-0">
+                <label class="text-muted text-xs d-block mb-1" style="font-size: 0.75rem;">SPECIAL CARE & FINDER NOTES</label>
+                <div class="p-2 bg-warning-subtle rounded-3 small text-dark border border-warning-subtle" id="petSpecialCare">
+                  Standard domestic care instructions.
+                </div>
+              </div>
+            </div>
+
+            <!-- Public QR Emergency Quick Preview Link -->
+            <div class="custom-card p-3 text-center bg-white">
+              <h6 class="fw-bold text-dark mb-1 small">Public Emergency URL</h6>
+              <p class="text-muted text-xs mb-2" style="font-size: 0.75rem;">Test how finders see your pet when scanning:</p>
+              <a href="#" id="previewPublicEmergencyLink" target="_blank" class="btn btn-outline-custom btn-sm w-100">
+                <i class="bi bi-box-arrow-up-right me-1"></i> Open Public Profile
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Health Records Timeline & Category Filters -->
+          <div class="col-lg-8">
+            <div class="custom-card p-4">
+              <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 border-bottom pb-3">
+                <div>
+                  <h5 class="fw-bold mb-0"><i class="bi bi-journal-medical text-success me-2"></i>Health Records History</h5>
+                  <small class="text-muted">Chronological veterinary treatments, vaccinations, and documents</small>
+                </div>
+                <a href="#" id="addRecordBtn" class="btn btn-primary-custom btn-sm">
+                  <i class="bi bi-plus-lg"></i> Add Record
+                </a>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div class="d-flex flex-wrap gap-2 mb-4" id="recordFilterButtons">
+                <button class="btn btn-sm btn-primary-custom filter-btn active" data-category="all">All Records</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="vaccination">Vaccinations</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="deworming">Deworming</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="medication">Medications</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="vet_visit">Vet Visits</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="allergy_condition">Conditions</button>
+                <button class="btn btn-sm btn-light border filter-btn" data-category="document">Documents</button>
+              </div>
+
+              <!-- Records List Container -->
+              <div id="recordsTimeline" class="timeline">
+                <div class="text-center text-muted py-5">
+                  <div class="spinner-border text-success" role="status"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Health Record Modal -->
+  <div class="modal fade" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title fw-bold text-danger"><i class="bi bi-trash3-fill me-2"></i>Delete Health Record</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body py-2">
+          <p class="text-muted">Are you sure you want to delete this record? This action cannot be reversed.</p>
+        </div>
+        <div class="modal-footer border-top-0">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteRecordBtn">Delete Record</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/pet-details.js"></script>
+</body>
+</html>
